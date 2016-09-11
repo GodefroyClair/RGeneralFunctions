@@ -2,10 +2,10 @@
 ##############LOAD FUNCTIONS ####################
 #################################################
 
-load.file <- function(filename){
+load_file <- function(filename){
   
   #chargement d'un fichier csv dans un data frame, le CSV a une ligne pour les noms de variable (header = TRUE), les variables des colonnes sont respectivement de type chaîne de caractère et numérique (x3) au chargement
-  df <-read.csv2(file = filename, sep=";",header = TRUE,dec=",",colClasses=c("character", rep("numeric",4)),na=NA)
+  df <- read.csv2(file = filename, sep=";",header = TRUE,dec=",",colClasses=c("character", rep("numeric",4)),na=NA)
   
   #modification des noms de variables
   names(df)<-c("date","respiration", "activite.electrodermale", "temperature", "frequence.cardiaque")
@@ -24,3 +24,4 @@ load.file <- function(filename){
   
   return(tbl_df(df))
 }
+

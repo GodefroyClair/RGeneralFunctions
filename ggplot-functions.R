@@ -11,13 +11,13 @@ df<- structure(list(
 )), .Names = c("X1", "X2"), row.names = c(NA, -41L), class = "data.frame")
 
 
-plot.var <- function(df, mesure = "respiration", titre ="" ){ 
-     ggplot(data = df[0:taille,], aes(x = date, y= respiration)) +
+plot.var <- function(df, mesure = "respiration", titre ="", names = "?" ){ 
+     ggplot(data = df, aes(x = date, y= respiration)) +
          geom_line(size=.2, color="blue") +
          xlab("temps (m:s)") + 
          ylab(mesure) + 
          ggtitle(paste("Expérience",names,sep = " ")) +
-         geom_line(mapping = aes(y=lo,color="lo"),color="red",show.legend = T)+
+         #geom_line(mapping = aes(y=lo,color="lo"),color="red",show.legend = T)+
          #geom_line(mapping = aes(y=lo2),color="green")+
          #geom_line(mapping = aes(y=lo3),color="brown")+
          #geom_line(mapping = aes(y=low),color="black")+
@@ -108,7 +108,6 @@ plot.points <- function(df, alpha.factor = .1, color.factor = "as.numeric(elapse
 
 
 #function to plot trajectory from a df on a 2D map
-#detection of as.numeric in color.factor arg to know if the color variable is continious or discrete
 #@default arg:
 #   alpha.factor for transparency (default : .1)
 #   color.factor for point color (def : time evolution)
@@ -212,3 +211,21 @@ plot.dist.time.facets <- function(df, plot.title = ""){
 #grid.draw(grob)
 #plot.margin =  unit(c(-0.1, -0.1, 0, 0), "lines")
 #panel.margin = unit(-0.1, "lines")
+
+
+####################SIGNAL#################
+##DEBUG
+#df_spctr <- df_spectre
+#rm_zero <- T
+#x_lim <- c(-.1,.1)
+
+##visualisation du spectre de fréquence :
+#made to work with the df returned by function spectrum analysis
+#rm_zero allows one to remove the fft value at zero frequency
+plot_spectrum <- function(df_spctr,x_lim = NULL, rm_zero = F, nom_exp = "") {
+  if(rm_zero)df_spctr <- df_spctr[! df_spctr$freq_domain == 0, ]
+  ggplot(df_spctr, aes(x = freq_domain, y = fft)) + 
+    ggtitle(paste("expérience" , nom_exp)) +
+    geom_line(col="red") +
+    {if(!is.null(x_lim))xlim(x_lim)}
+}

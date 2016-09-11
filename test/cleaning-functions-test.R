@@ -31,4 +31,6 @@ plot(x, y.clean, type="l", col="black", ylim=range(-1.5*max_y,1.5*max_y,5), ylab
 
 par(mfrow = c(1, 1))
 fft.y.noise <- spectrum.analysis(y.noise)
+fft.y <- spectrum.analysis(y)
 plot(Mod(fft.y.noise), type='l', main='Raw serie - fft spectrum')
+plot(Mod(fft.y), type='l', main='Raw serie - fft spectrum')
